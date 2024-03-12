@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'discover_devices_screen.dart'; // Make sure to import the DiscoverDevicesScreen
+//import 'discover_devices_screen.dart';
 
 class QuickSendScreen extends StatelessWidget {
   @override
@@ -19,7 +19,6 @@ class QuickSendScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             ElevatedButton(
-              // Add a button for navigating to the DiscoverDevicesScreen
               onPressed: () {
                 //Navigator.of(context).push(MaterialPageRoute(builder: (_) => DiscoverDevicesScreen()));
               },
