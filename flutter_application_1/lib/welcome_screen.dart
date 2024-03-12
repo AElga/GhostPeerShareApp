@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
 import 'sending_options_screen.dart';
-import 'configuration_screen.dart'; 
+import 'configuration_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E21),
+      backgroundColor: const Color(0xFF0A0E21),
       appBar: AppBar(
-        backgroundColor: Color(0xFF0A0E21),
-        elevation: 0, 
+        backgroundColor: const Color(0xFF0A0E21),
+        elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.settings,
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConfigurationScreen()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ConfigurationScreen()));
             },
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(flex: 2),
-            Text(
+            const Spacer(flex: 2),
+            const Text(
               'Welcome!',
               style: TextStyle(
                 color: Colors.white,
@@ -36,8 +39,8 @@ class WelcomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'What Would you Like to do?',
               style: TextStyle(
                 color: Colors.white,
@@ -45,33 +48,32 @@ class WelcomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             ElevatedButton.icon(
-              icon: Icon(Icons.send),
-              label: Text('SEND VIDEO'),
+              icon: const Icon(Icons.send),
+              label: const Text('SEND VIDEO'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, 
-                onPrimary: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+                foregroundColor: Colors.white, backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => SendingOptionsScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const SendingOptionsScreen()));
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton.icon(
-              icon: Icon(Icons.download),
-              label: Text('RECEIVE VIDEO'),
+              icon: const Icon(Icons.download),
+              label: const Text('RECEIVE VIDEO'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, 
-                onPrimary: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+                foregroundColor: Colors.white, backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               ),
               onPressed: () {
-                // need to implement navigation to receive video screen here 
+                // need to implement navigation to receive video screen here
               },
             ),
-            Spacer(flex: 2),
+            const Spacer(flex: 2),
           ],
         ),
       ),

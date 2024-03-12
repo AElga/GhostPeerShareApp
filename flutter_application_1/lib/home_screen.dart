@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'welcome_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E21), 
+      backgroundColor: const Color(0xFF0A0E21), 
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
+            const Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(30.0),
                 child: Column(
@@ -60,17 +62,17 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: const EdgeInsets.all(30.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 48, vertical: 20),
-                  textStyle: TextStyle(fontSize: 16),
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
+                  textStyle: const TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => WelcomeScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const WelcomeScreen()));
                 },
-                child: Text('Get Started'),
+                child: const Text('Get Started'),
               ),
             ),
           ],

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AdvancedSendScreen extends StatelessWidget {
+  const AdvancedSendScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // This screen will allow users to set their advanced sending options
     return Scaffold(
       appBar: AppBar(
-        title: Text('Advanced Send'),
-        backgroundColor: Color(0xFF0A0E21), 
+        title: const Text('Advanced Send'),
+        backgroundColor: const Color(0xFF0A0E21),
       ),
-      backgroundColor: Color(0xFF0A0E21),
-      body: Center(
+      backgroundColor: const Color(0xFF0A0E21),
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
