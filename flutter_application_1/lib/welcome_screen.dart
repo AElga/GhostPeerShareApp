@@ -63,8 +63,8 @@ class WelcomeScreen extends StatelessWidget {
               icon: Icon(Icons.download),
               label: Text('RECEIVE VIDEO'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Button background color
-                onPrimary: Colors.white, // Text color
+                primary: Colors.blue, 
+                onPrimary: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               ),
               onPressed: () {
