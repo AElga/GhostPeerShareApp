@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bluetooth_basic: ^0.1.7
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

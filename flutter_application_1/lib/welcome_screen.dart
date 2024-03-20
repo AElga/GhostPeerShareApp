@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'sending_options_screen.dart';
 import 'configuration_screen.dart';
+import 'receive_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,7 @@ class WelcomeScreen extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const ConfigurationScreen()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ConfigurationScreen()));
             },
           ),
         ],
@@ -57,8 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               ),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const SendingOptionsScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SendingOptionsScreen()));
               },
             ),
             const SizedBox(height: 16.0),
@@ -70,7 +69,7 @@ class WelcomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               ),
               onPressed: () {
-                // need to implement navigation to receive video screen here
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ReceiveScreen()));
               },
             ),
             const Spacer(flex: 2),
