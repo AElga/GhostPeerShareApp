@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ReceiveScreen extends StatefulWidget {
   const ReceiveScreen({Key? key}) : super(key: key);
@@ -14,7 +15,23 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
   @override
   void initState() {
     super.initState();
-    _bluetoothManager.startScan(timeout: const Duration(seconds: 4));
+    _requestPermissions().then((granted) {
+      if (granted) {
+        _bluetoothManager.startScan(timeout: const Duration(seconds: 4));
+      } else {
+        // Consider prompting the user about the necessity of Bluetooth permissions.
+        print('Bluetooth permissions are not granted');
+      }
+    });
+  }
+
+  Future<bool> _requestPermissions() async {
+    var status = await Permission.bluetoothScan.request();
+    if (status != PermissionStatus.granted) {
+      return false;
+    }
+    status = await Permission.bluetoothConnect.request();
+    return status == PermissionStatus.granted;
   }
 
   @override
@@ -39,18 +56,14 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
             itemBuilder: (context, index) {
               BluetoothDevice device = snapshot.data![index];
               return ListTile(
-                title: Text(device.name ??
-                    'Unknown Device'), // Fallback to 'Unknown Device' if null
-                subtitle: Text(device.address ??
-                    'Unknown Address'), // Fallback to 'Unknown Address' if null
+                title: Text(device.name ?? 'Unknown Device'),
+                subtitle: Text(device.address ?? 'Unknown Address'),
                 onTap: () async {
-                  // Implement connection logic here
-                  // Example: Attempt to connect to the selected Bluetooth device
                   try {
                     await _bluetoothManager.connect(device);
-                    // Handle successful connection (e.g., navigate to another screen or show a success message)
+                    // Handle successful connection, e.g., navigate to a screen to receive data
                   } catch (error) {
-                    // Handle connection errors (e.g., show an error message)
+                    // Handle connection errors, e.g., show an error message
                     print('Error connecting to device: $error');
                   }
                 },

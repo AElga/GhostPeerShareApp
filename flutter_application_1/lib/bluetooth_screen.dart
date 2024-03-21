@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/bluetooth_manager.dart'; // Ensure this points to the correct file where BluetoothDeviceManager is defined
+import 'bluetooth_manager.dart';
 import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,21 +19,16 @@ class _MyBluetoothPageState extends State<MyBluetoothPage> {
   @override
   void initState() {
     super.initState();
-    requestBluetoothPermissions().then((_) {
-      _bluetoothDeviceManager.startScan();
+    _requestBluetoothPermissions().then((_) {
+      _bluetoothDeviceManager.startScan(timeout: const Duration(seconds: 4));
     });
   }
 
-  Future<void> requestBluetoothPermissions() async {
-    var bluetoothScanStatus = await Permission.bluetoothScan.status;
-    if (!bluetoothScanStatus.isGranted) {
-      await Permission.bluetoothScan.request();
-    }
-
-    var bluetoothConnectStatus = await Permission.bluetoothConnect.status;
-    if (!bluetoothConnectStatus.isGranted) {
-      await Permission.bluetoothConnect.request();
-    }
+  Future<void> _requestBluetoothPermissions() async {
+    await [
+      Permission.bluetoothScan,
+      Permission.bluetoothConnect,
+    ].request();
   }
 
   @override
@@ -45,30 +40,36 @@ class _MyBluetoothPageState extends State<MyBluetoothPage> {
       body: StreamBuilder<List<BluetoothDevice>>(
         stream: _bluetoothDeviceManager.scanResults,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var device = snapshot.data![index];
-                return ListTile(
-                  title: Text(device.name ?? 'Unknown Device'),
-                  subtitle: Text(device.address ?? 'Unknown address'),
-                  onTap: () async {
-                    _selectedDevice = device;
-                    await _bluetoothDeviceManager.connect(device);
-                  },
-                );
-              },
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+                child: Text('No devices found. Try scanning again.'));
           }
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var device = snapshot.data![index];
+              return ListTile(
+                title: Text(device.name ?? 'Unknown Device'),
+                subtitle: Text(device.address ?? 'Unknown address'),
+                onTap: () async {
+                  setState(() {
+                    _selectedDevice = device;
+                  });
+                  await _bluetoothDeviceManager.connect(device);
+                },
+                trailing: _selectedDevice?.address == device.address
+                    ? const Icon(Icons.check, color: Colors.green)
+                    : null,
+              );
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           if (_selectedDevice != null) {
-            _bluetoothDeviceManager.sendData(utf8.encode('Hello World'));
+            final message = utf8.encode('Hello World');
+            await _bluetoothDeviceManager.sendData(message);
           }
         },
         child: const Icon(Icons.send),

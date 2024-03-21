@@ -1,17 +1,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Bluetooth permissions for all Android versions -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <!-- This permission is necessary for Bluetooth discovery on Android versions prior to Android 6 (API level 23) -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- For Android 12 (API level 31) and above, explicit Bluetooth permissions are required -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!-- If your app needs background location access, uncomment the following line -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->
+
+    <!-- Queries tag for discovering Bluetooth devices; required for Android 11 (API level 30) and newer -->
+    <queries>
+        <intent>
+            <action android:name="android.bluetooth.device.action.FOUND" />
+        </intent>
+        <intent>
+            <action android:name="android.bluetooth.adapter.action.DISCOVERY_STARTED" />
+        </intent>
+        <intent>
+            <action android:name="android.bluetooth.adapter.action.DISCOVERY_FINISHED" />
+        </intent>
+        <intent>
+            <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+        </intent>
+    </queries>
 
     <application
         android:label="flutter_application_1"
         android:icon="@mipmap/ic_launcher"
-        android:name="${applicationName}">
+        android:name="${applicationName}"
+        android:enableOnBackInvokedCallback="true"> <!-- Added this line -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -21,8 +40,8 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <!-- Meta-data tag for specifying the Flutter embedding version -->
             <meta-data
